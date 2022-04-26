@@ -10,7 +10,7 @@ npm install imagemin-sharp --save
 
 ## Usage
 
-```ts
+```js
 import imagemin from "imagemin";
 import imageminSharp from "imagemin-sharp";
 
@@ -18,8 +18,12 @@ const files = await imagemin(["images/*.{jpg,png}"], {
   destination: "build/images",
   plugins: [
     imageminSharp({
-      chainSharp: (sharp) => {
-        return sharp.resize({ width: 100 }).rotate();
+      chainSharp: await (sharp) => {
+        const meta = await sharp.metadata()
+        if (meta.width > 1000) {
+          return sharp.resize({ width: 1000 })
+        }
+        return sharp
       },
     }),
   ],
