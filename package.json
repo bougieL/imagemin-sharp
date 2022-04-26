@@ -1,6 +1,6 @@
 {
   "name": "imagemin-sharp",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Imagemin plugin for `sharp`",
   "main": "index.js",
   "scripts": {
