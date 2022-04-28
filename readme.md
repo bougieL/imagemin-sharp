@@ -18,12 +18,12 @@ const files = await imagemin(["images/*.{jpg,png}"], {
   destination: "build/images",
   plugins: [
     imageminSharp({
-      chainSharp: await (sharp) => {
-        const meta = await sharp.metadata()
+      chainSharp: async (sharp) => {
+        const meta = await sharp.metadata();
         if (meta.width > 1000) {
-          return sharp.resize({ width: 1000 })
+          return sharp.flip().resize({ width: 1000 });
         }
-        return sharp
+        return sharp.flip();
       },
     }),
   ],
@@ -31,6 +31,13 @@ const files = await imagemin(["images/*.{jpg,png}"], {
 
 console.log(files);
 ```
+
+## Options
+
+Options is a union of `chainSharp` and `SharpOptions`
+
+- `chainSharp`: A callback to chain operate sharp instance, return `Sharp | Promise<Sharp>`
+- `SharpOptions`: Sharp constructor options, can referrer https://sharp.pixelplumbing.com/api-constructor
 
 ## Related
 
